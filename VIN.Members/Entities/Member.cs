@@ -50,10 +50,6 @@ namespace VIN.Members.Domain.Entities
         private string _phone;
         public string Phone => _phone;
 
-       
-        //private bool _isDeleted;
-        //protected internal bool IsDeleted => _isDeleted;
-
         protected internal async Task SetUserName(UserName userName, IUserNameVerifier userNameVerifier)
         {
             Guard.NotNull(userNameVerifier, nameof(userNameVerifier));

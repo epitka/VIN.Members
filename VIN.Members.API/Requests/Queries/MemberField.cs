@@ -2,6 +2,7 @@
 {
     public enum MemberField
     {
+        None,
         UserName,
         FirstName,
         LastName,

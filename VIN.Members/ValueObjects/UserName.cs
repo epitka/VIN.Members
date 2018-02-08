@@ -11,6 +11,8 @@ namespace VIN.Members.Domain.ValueObjects
     {
         private string _value;
 
+        protected UserName() { }
+
         public UserName(string username)
         {
             if (String.IsNullOrWhiteSpace(username))

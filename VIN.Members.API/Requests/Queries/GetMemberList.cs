@@ -9,6 +9,7 @@ using VIN.Members.API.Extensions;
 using VIN.Members.API.Infrastructure;
 using VIN.Members.Domain.Entities;
 using VIN.Members.Domain.Entities.EFConfiguration;
+using VIN.Members.Domain.ValueObjects;
 
 namespace VIN.Members.API.Requests.Queries
 {
@@ -19,9 +20,11 @@ namespace VIN.Members.API.Requests.Queries
             public Query()
             {
                 Sort = new Dictionary<MemberField, SortDirection>();
-                Fiter = new Dictionary<MemberField, object>();
+                Filter = new Dictionary<MemberField, object>();
 
             }
+
+            public string UserName { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string Email { get; set; }
@@ -31,7 +34,7 @@ namespace VIN.Members.API.Requests.Queries
             public PagingInfo PagingInfo { get; set; }
 
             public Dictionary<MemberField, SortDirection> Sort { get; }
-            public Dictionary<MemberField, object> Fiter { get; }
+            public Dictionary<MemberField, object> Filter { get; }
 
         }
 
@@ -60,6 +63,11 @@ namespace VIN.Members.API.Requests.Queries
                 var q = _context.Members.AsQueryable();
 
                 q.AsNoTracking();
+
+                if (string.IsNullOrWhiteSpace(query.UserName) == false)
+                {
+                    q = q.Where(x => x.UserName == query.UserName);
+                }
 
                 if (string.IsNullOrWhiteSpace(query.FirstName) == false)
                 {

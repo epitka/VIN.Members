@@ -29,17 +29,18 @@ namespace VIN.Members.API.Controllers
 
         //GET api/members?query
         [HttpGet]
-        public async Task<PagedResult<Model.MemberInfo>> Query([FromBody]string firstName, [FromBody]string lastName,
-                                         [FromBody]string email, [FromBody]string phone,
-                                         [FromBody]DateTime? dateOfBirth,
-                                         [FromBody]string sortBy, [FromBody]bool isAscending,
-                                         [FromBody]int pageSize, [FromBody]int pageNumber)
+        public async Task<PagedResult<Model.MemberInfo>> Query([FromQuery]string userName, [FromQuery]string firstName, [FromQuery]string lastName,
+                                         [FromQuery]string email, [FromQuery]string phone,
+                                         [FromQuery]DateTime? dateOfBirth,
+                                         [FromQuery]string sortBy, [FromQuery]bool isAscending = true,
+                                         [FromQuery]int pageSize = 10, [FromQuery]int pageNumber = 1)
         {
 
             var paging = new PagingInfo(pageSize, pageNumber);
 
             var query = new GetMemberList.Query()
             {
+                UserName = userName,
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
@@ -48,17 +49,22 @@ namespace VIN.Members.API.Controllers
                 PagingInfo = paging
             };
 
+            if (string.IsNullOrEmpty(sortBy))
+            {
+                sortBy = MemberField.UserName.ToString();
+            }
+
             query.Sort.Add((MemberField)Enum.Parse(typeof(MemberField), sortBy),
                 isAscending ? SortDirection.Asc : SortDirection.Desc);
 
             var result = await _mediator.Send(query).ConfigureAwait(false);
-
+            
             var toReturn = new PagedResult<MemberInfo>()
             {
                 CurrentPage = result.CurrentPage,
                 PageSize = result.PageSize,
                 PageCount = result.PageCount,
-                RowCount = result.PageCount,
+                RowCount = result.RowCount,
                 Data = result.Data.Select(x => x.ToMemberInfo())
             };
 
@@ -68,7 +74,7 @@ namespace VIN.Members.API.Controllers
 
         // GET api/members/5
         [HttpGet("{id}")]
-        public async Task<MemberInfo> Get([FromQuery]Guid id)
+        public async Task<MemberInfo> Get(Guid id)
         {
             //TODO: check for arguments or validate query
 
@@ -81,8 +87,8 @@ namespace VIN.Members.API.Controllers
         }
 
         // POST api/members
-        [HttpPost("{id}")]
-        public async Task<MemberInfo> Post( [FromBody]CreateMemberCommand request)
+        [HttpPost]
+        public async Task<MemberInfo> Create([FromBody]CreateMemberCommand request)
         {
             //TODO: validate MemberInfo
 
@@ -94,7 +100,7 @@ namespace VIN.Members.API.Controllers
                 phone = new Phone(phoneNumber.Value);
             }
 
-            var command = new CreateMember.Command(new UserName(request.UserName), 
+            var command = new CreateMember.Command(new UserName(request.UserName),
                                                     new Name(request.FirstName, request.LastName),
                                                     new DateOfBirth(request.DateOfBirth),
                                                     new Email(request.Email), phone);
@@ -103,10 +109,10 @@ namespace VIN.Members.API.Controllers
 
             return result.ToMemberInfo();
         }
-        
-        // POST api/members
-        [HttpPost]
-        public async Task<MemberInfo> Post([FromBody]UpdateMemberCommand request)
+
+        // POST api/members/5
+        [HttpPost("{id}")]
+        public async Task<MemberInfo> Update([FromBody]UpdateMemberCommand request)
         {
             //TODO: validate MemberInfo
 
@@ -128,14 +134,14 @@ namespace VIN.Members.API.Controllers
             return result.ToMemberInfo();
         }
 
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public Task Delete(Guid id)
-        //{
-        //    var command = new DeleteMember.Command(id);
+        // DELETE api/members/5
+        [HttpDelete("{id}")]
+        public void Delete(Guid id)
+        {
+            var command = new DeleteMember.Command(id);
 
-        //    _mediator.Send(command).ConfigureAwait(false);
-        //}
+            _mediator.Send(command).ConfigureAwait(false);
+        }
 
 
 

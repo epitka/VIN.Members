@@ -36,11 +36,23 @@ namespace VIN.Members.Domain.Commands
 
             protected override async Task HandleCore(Command cmd)
             {
-                var member = await _context.FindAsync<Member>(cmd.MemberId).ConfigureAwait(false);
+                try
+                {
+                    var member = await _context.FindAsync<Member>(cmd.MemberId);//.ConfigureAwait(false);
 
-                _context.Remove(member);
+                   // if (member != null)
+                   //// {
+                        _context.Remove(member);
 
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                        await _context.SaveChangesAsync().ConfigureAwait(false);
+                   // }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+              
 
                 // use mediator here to notify other parts of application (within domain, not other microservices) of the change
             }

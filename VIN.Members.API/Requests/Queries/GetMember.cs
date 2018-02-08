@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using VIN.Members.Domain.Entities;
 using VIN.Members.Domain.Entities.EFConfiguration;
 
@@ -25,7 +27,8 @@ namespace VIN.Members.API.Requests.Queries
 
             protected override Task<Member> HandleCore(Query request)
             {
-                return _context.FindAsync<Member>(request.MemberId);
+                return _context.Members
+                            .SingleOrDefaultAsync(x=>x.Id== request.MemberId);
             }
         }
     }

@@ -17,7 +17,8 @@ namespace VIN.Members.Domain.IntegrationTests.Commands
         protected HandlerTest(ITestOutputHelper output)
         {
             _output = output;
-            _container = new Bootstrap().Container();
+            _container = Bootstrap.Container();
+            Bootstrap.Container();
 
             _memberContext = _container.Resolve<MemberContext>();
 
