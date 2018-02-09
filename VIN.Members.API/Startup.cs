@@ -31,6 +31,16 @@ namespace VIN.Members.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                    //    .AllowCredentials()
+                );
+            });
+
             services.AddMvc()
                     .AddControllersAsServices();//Injecting Controllers themselves thru DI
                             //For further info see: http://docs.autofac.org/en/latest/integration/aspnetcore.html#controllers-as-services
@@ -39,23 +49,23 @@ namespace VIN.Members.API
 
             var connection = Configuration["ConnectionString"];
 
-           // services.AddDbContext<MemberContext>(options => options.UseSqlServer(connection),ServiceLifetime.Scoped);
+            services.AddDbContext<MemberContext>(options => options.UseSqlServer(connection),ServiceLifetime.Scoped);
 
-            services.AddEntityFrameworkSqlServer()
-                .AddDbContext<MemberContext>(options =>
-                    {
-                        options.UseSqlServer(Configuration["ConnectionString"]
-                            //,sqlServerOptionsAction: sqlOptions =>
-                            //{
-                            //    sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-                            //    sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                            //}
-                            );
-                    },
-                    ServiceLifetime.Scoped  //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
-                );
+            //services.AddEntityFrameworkSqlServer()
+            //    .AddDbContext<MemberContext>(options =>
+            //        {
+            //            options.UseSqlServer(Configuration["ConnectionString"]
+            //                //,sqlServerOptionsAction: sqlOptions =>
+            //                //{
+            //                //    sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+            //                //    sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+            //                //}
+            //                );
+            //        },
+            //        ServiceLifetime.Scoped  //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
+            //    );
 
-
+           
             var container = new ContainerBuilder();
             container.Populate(services);
 
@@ -76,7 +86,10 @@ namespace VIN.Members.API
                 app.UseDeveloperExceptionPage();
             }
 
+            //NOTE: must be before UseMVC !!!
+            app.UseCors("CorsPolicy");
             app.UseMvc();
+           
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

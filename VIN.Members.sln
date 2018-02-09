@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VIN.Members.Domain.Integrat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VIN.Members.Domain.UnitTests", "VIN.Members.Domain.UnitTests.cs\VIN.Members.Domain.UnitTests.csproj", "{D17886A4-51A2-4EB1-8CC3-B82E0129A291}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VIN.Members.API.IntegrationTests", "VIN.Members.API.IntegrationTests.cs\VIN.Members.API.IntegrationTests.csproj", "{E1EF2EDC-22E1-4984-B068-277295113C36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VIN.Members.API.IntegrationTests", "VIN.Members.API.IntegrationTests.cs\VIN.Members.API.IntegrationTests.csproj", "{E1EF2EDC-22E1-4984-B068-277295113C36}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VIN.WebSPA", "VIN.WebSPA\VIN.WebSPA.csproj", "{173C9ED3-6F98-4134-933A-6802A737C16B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{E1EF2EDC-22E1-4984-B068-277295113C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1EF2EDC-22E1-4984-B068-277295113C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1EF2EDC-22E1-4984-B068-277295113C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{173C9ED3-6F98-4134-933A-6802A737C16B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{173C9ED3-6F98-4134-933A-6802A737C16B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{173C9ED3-6F98-4134-933A-6802A737C16B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{173C9ED3-6F98-4134-933A-6802A737C16B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

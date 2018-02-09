@@ -1,0 +1,28 @@
+﻿<vin-header url="/catalog">Back to catalog</vin-header>
+<div class="container">
+    <div class="alert alert-warning vin-member-alert" role="alert" [hidden]="!errorReceived">
+        Error requesting members list, please try later on
+    </div>
+    <div *ngIf="members?.data?.length > 0">
+        <vin-pager [model]="paginationInfo" (changed)="onPageChanged($event)"></vin-pager>        
+        <div class="card-group vin-member-items row">
+            <div class="vin-member-item col-md-4"
+                 *ngFor="let item of members.data">
+
+                <div class="card-block">
+                    <h4 class="card-title vin-member-name">{{item.userName}}</h4>
+                    <ng-template #showDefaultDetailsLink>
+                        <input [ngClass]="{'vin-member-button': true}" type="submit" value="More details" routerLink="/members/{{item.id}}">
+                    </ng-template>
+                </div>
+                
+            </div>
+        </div>
+
+        <vin-pager [model]="paginationInfo" (changed)="onPageChanged($event)"></vin-pager>
+    </div>
+    <div *ngIf="members?.data?.length == 0">
+        <span>THERE ARE NO RESULTS THAT MATCH YOUR SEARCH</span>
+    </div>
+</div>
+
