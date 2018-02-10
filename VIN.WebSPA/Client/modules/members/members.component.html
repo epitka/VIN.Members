@@ -1,4 +1,4 @@
-﻿<vin-header url="/catalog">Back to catalog</vin-header>
+﻿
 <div class="container">
     <div class="alert alert-warning vin-member-alert" role="alert" [hidden]="!errorReceived">
         Error requesting members list, please try later on
@@ -11,9 +11,7 @@
 
                 <div class="card-block">
                     <h4 class="card-title vin-member-name">{{item.userName}}</h4>
-                    <ng-template #showDefaultDetailsLink>
-                        <input [ngClass]="{'vin-member-button': true}" type="submit" value="More details" routerLink="/members/{{item.id}}">
-                    </ng-template>
+                   
                 </div>
                 
             </div>
