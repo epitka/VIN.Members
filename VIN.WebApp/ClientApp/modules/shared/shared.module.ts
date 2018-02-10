@@ -2,7 +2,9 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HttpModule, JsonpModule } from '@angular/http';
+import { JsonpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http'; 
+
 
 // Services
 import { DataService } from './services/data.service';
@@ -24,7 +26,7 @@ import { UppercasePipe } from './pipes/uppercase.pipe';
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        HttpModule,
+        HttpClientModule,
         JsonpModule
     ],
     declarations: [

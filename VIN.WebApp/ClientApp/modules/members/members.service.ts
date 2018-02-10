@@ -26,11 +26,14 @@ export class MembersService {
 
     getMembers(pageNumber: number, pageSize: number):Observable<IMemberList> {
         let url = this.membersUrl + '/api/members';
-        url = url + '?pageNumber=' + pageNumber + '&pageSize=' + pageSize;
 
-        return this.service.get(url).map((response: Response) => {
-            return response.json();
-        });
+        var params = {
+            pageNumber: pageNumber,
+            pageSize: pageSize
+        };
+
+        return this.service.get<IMemberList>(url, params);
+  
     } 
 }
 
