@@ -1,20 +1,56 @@
 ﻿
-<div class="container">
+<div class="container-fluid">
     <div class="alert alert-warning vin-member-alert" role="alert" [hidden]="!errorReceived">
         Error requesting members list, please try later on
     </div>
     <div *ngIf="members?.length > 0">
-        <vin-pager [model]="paginationInfo" (changed)="onPageChanged($event)"></vin-pager>
+        <div class="row">
+            <div class="col-md-9">
+                <span class="items">Total items: {{totalItemsCount}}</span>
+            </div>
+            <div class="col-md-3 form-inline text-right">
+                <div class="form-group items-per-page">
+                    <label for="itemsOnPageSelect">Items per page:</label>
+                    <select name="pageSize" [(ngModel)]="pageSize"
+                            class="form-control input-sm">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                        <option value="75">75</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- grid-->
         <div class="row">
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>User name</th>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Date of Birth</th>
-                        <th>Email</th>
-                        <th>Phone</th>
+                        <th class="sortable"
+                            [ngClass]="{'sort-ascent':sortByField == 'username' && sortByDirection=='asc',
+                                        'sort-descent':sortByField == 'username' && sortByDirection=='desc'}"
+                            (click)="onSortByChange('userName')">User name</th>
+                        <th class="sortable"
+                            [ngClass]="{'sort-ascent':sortByField == 'firstName' && sortByDirection=='asc',
+                                        'sort-descent':sortByField == 'firstName' && sortByDirection=='desc'}"
+                            (click)="onSortByChange('firstName')">First name</th>
+                        <th class="sortable"
+                            [ngClass]="{'sort-ascent':sortByField == 'lastName' && sortByDirection=='asc',
+                                        'sort-descent':sortByField == 'lastName' && sortByDirection=='desc'}"
+                            (click)="onSortByChange('lastName')">Last name</th>
+                        <th class="sortable"
+                            [ngClass]="{'sort-ascent':sortByField == 'dateOfBirth' && sortByDirection=='asc',
+                                        'sort-descent':sortByField == 'dateOfBirth' && sortByDirection=='desc'}"
+                            (click)="onSortByChange('dateOfBirth')">Date of Birth</th>
+                        <th class="sortable"
+                            [ngClass]="{'sort-ascent':sortByField == 'email' && sortByDirection=='asc',
+                                        'sort-descent':sortByField == 'email' && sortByDirection=='desc'}"
+                            (click)="onSortByChange('email')">Email</th>
+                        <th class="sortable"
+                            [ngClass]="{'sort-ascent':sortByField == 'phone' && sortByDirection=='asc',
+                                        'sort-descent':sortByField == 'phone' && sortByDirection=='desc'}"
+                            (click)="onSortByChange('phone')">Phone</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,8 +65,14 @@
                 </tbody>
             </table>
         </div>
-
-        <vin-pager [model]="paginationInfo" (changed)="onPageChanged($event)"></vin-pager>
+        <div class="row">
+            <div class="text-right">
+                <ngb-pagination [collectionSize]=totalItemsCount [(page)]="page"
+                                [maxSize]="5" [rotate]="true" [boundaryLinks]="true" [(pageSize)]=pageSize
+                                class="d-flex justify-content-end">
+                </ngb-pagination>
+            </div>
+        </div>
     </div>
     <div *ngIf="members?.data?.length == 0">
         <span>THERE ARE NO RESULTS THAT MATCH YOUR SEARCH</span>

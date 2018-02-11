@@ -9,51 +9,83 @@ import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'vin-members',
-    templateUrl: './members.component.html'
+    templateUrl: './members.component.html',
+    styleUrls:['./members.component.css']
 })
 export class MembersComponent implements OnInit {
 
-    paginationInfo: IPager;
+    totalItemsCount: number;
     members: IMember[];
     errorReceived: boolean;
-
+    
     constructor(private service: MembersService, private configurationService: ConfigurationService) { }
+    
+    private _page: number = 1;
+    get page(): number {
+        return this._page;
+    }
+    set page(value: number) {
+        if (value === this._page) return;
+        this._page = value;
+        this.getMembers();
+    }
 
+    private _pageSize: number = 10;
+    get pageSize(): number {
+        return this._pageSize;
+    }
+    set pageSize(value: number) {
+        if (value === this._pageSize) return;
+        this._pageSize = value;
+        this._page = 1;
+        this.getMembers();
+    }
+
+    public sortByField: string = 'username';
+    public sortByDirection: string = 'asc';
+    
     ngOnInit() {
         if (this.configurationService.isReady) {
-            this.getMembers(10, 0);
+            this.getMembers();
         } else {
             this.configurationService.settingsLoaded$.subscribe(x => {
-                this.getMembers(10, 0);
+                this.getMembers();
             });
         }
     }
 
-    onPageChanged(value: any) {
-        console.log('members pager event fired' + value);
-        //event.preventDefault();
-        this.paginationInfo.actualPage = value;
-        this.getMembers(this.paginationInfo.itemsPage, value);
+   
+    onSortByChange(value: string) {
+
+        console.log("onSortByChange: " + value);
+
+        if (value === this.sortByField) {
+            this.sortByDirection = this.sortByDirection === 'asc' ? 'desc' : 'asc'
+        } else {
+            this.sortByField = value;
+            this.sortByDirection = 'asc';
+        }
+
+        this._page = 1;
+
+        this.getMembers();
     }
 
-    getMembers(pageSize: number, pageIndex: number) {
+    getMembers() {
 
-        console.log("in get members")
+        console.log("in get members");
         this.errorReceived = false;
 
-        this.service.getMembers(pageIndex, pageSize)
+        this.service.getMembers(this.page, this.pageSize, this.sortByField, this.sortByDirection)
             .catch((err) => this.handleError(err))
             .subscribe((response: IMemberList) => {
+
                 console.log("fetched members");
                 console.log(response);
+
                 this.members = response.data;
-                this.paginationInfo = {
-                    actualPage: response.pageIndex,
-                    itemsPage: response.pageSize,
-                    totalItems: response.count,
-                    totalPages: Math.ceil(response.count / response.pageSize),
-                    items: response.pageSize
-                };
+                
+                this.totalItemsCount = response.rowCount;
             });
     }
 

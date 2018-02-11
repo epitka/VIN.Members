@@ -47,16 +47,17 @@ namespace VIN.Members.API.Requests.Queries
                 _context = context;
             }
 
-            private Dictionary<MemberField, Expression<Func<Member, object>>> fieldToSortExpression
-                            = new Dictionary<MemberField, Expression<Func<Member, object>>>()
-            {
-                {MemberField.FirstName, x => x.Name.FirstName},
-                {MemberField.LastName, x => x.Name.LastName},
-                {MemberField.DateOfBirth, x => x.DateOfBirth},
-                {MemberField.Phone, x => x.Phone},
-                {MemberField.Email, x => x.Email },
-                {MemberField.UserName, x=>x.UserName }
-            };
+            //Moved to MemberField custom enumeration type
+            //private Dictionary<MemberField, Expression<Func<Member, object>>> fieldToSortExpression
+            //                = new Dictionary<MemberField, Expression<Func<Member, object>>>()
+            //{
+            //    {MemberField.FirstName, x => x.Name.FirstName},
+            //    {MemberField.LastName, x => x.Name.LastName},
+            //    {MemberField.DateOfBirth, x => x.DateOfBirth},
+            //    {MemberField.Phone, x => x.Phone},
+            //    {MemberField.Email, x => x.Email },
+            //    {MemberField.UserName, x=>x.UserName }
+            //};
 
             protected override async Task<PagedResult<Member>> HandleCore(Query query)
             {
@@ -99,7 +100,7 @@ namespace VIN.Members.API.Requests.Queries
                 {
                     var field = item.Key;
                     var isAscending = item.Value==SortDirection.Asc;
-                    var expression = fieldToSortExpression[field];
+                    var expression = field.PropertyExpression;
                     
                     q = q.OrderBy(expression, isAscending);
                 }
@@ -115,6 +116,4 @@ namespace VIN.Members.API.Requests.Queries
             }
         }
     }
-
-
 }

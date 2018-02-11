@@ -1,0 +1,22 @@
+﻿.items-per-page{
+   
+}
+.items{
+  
+}
+
+.sortable:after {
+    font-family: FontAwesome;
+    content: "\f0dc";
+    margin-left:3px;
+}
+
+.sortable.sort-ascent:after {
+    content: '\f0de';
+    vertical-align: bottom;
+}
+
+.sortable.sort-descent:after {
+    content: "\f0dd";
+    vertical-align: top;
+}

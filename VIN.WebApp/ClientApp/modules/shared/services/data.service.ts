@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpParams, HttpHeaders } from '@angular/common/http'; 
+import { HttpClient, HttpResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
@@ -12,12 +12,13 @@ import 'rxjs/add/operator/catch';
 export class DataService {
     constructor(private httpClient: HttpClient) { }
 
-    get<T>(url: string, params?:Object) : Observable<T> {
+    get<T>(url: string, params?: any): Observable<T> {
 
-        const options = params ? { params: new HttpParams(params) } : {};
+        const httpParamsOptions = { fromObject: params };
+        const options = params ? { params: new HttpParams(httpParamsOptions) } : {};
 
         return this.httpClient.get<T>(url, options)
-                        .catch(this.handleError);
+            .catch(this.handleError);
     }
 
     //postWithId(url: string, data: any, params?: any): Observable<Response> {
@@ -45,7 +46,7 @@ export class DataService {
     //    let options: RequestOptionsArgs = {};
 
     //    options.headers = new Headers();
-     
+
     //    return this.httpClient.put(url, data, options).map(
     //        (res: Response) => {
     //            return res;
@@ -54,7 +55,7 @@ export class DataService {
 
     //delete(url: string, params?: any) {
     //    let options: RequestOptionsArgs = {};
-        
+
     //    console.log('data.service deleting');
     //    // return this.http.delete(url, options).subscribe(
     //    //        return res;

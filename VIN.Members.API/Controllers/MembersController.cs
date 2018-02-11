@@ -14,6 +14,7 @@ using VIN.Members.API.Requests.Commands;
 using VIN.Members.API.Requests.Queries;
 using VIN.Members.Domain.Commands;
 using VIN.Members.Domain.ValueObjects;
+using VIN.Members.Domain.Infrastructure;
 
 namespace VIN.Members.API.Controllers
 {
@@ -32,10 +33,12 @@ namespace VIN.Members.API.Controllers
         public async Task<PagedResult<Model.MemberInfo>> Query([FromQuery]string userName, [FromQuery]string firstName, [FromQuery]string lastName,
                                          [FromQuery]string email, [FromQuery]string phone,
                                          [FromQuery]DateTime? dateOfBirth,
-                                         [FromQuery]string sortBy, [FromQuery]bool isAscending = true,
-                                         [FromQuery]int pageSize = 10, [FromQuery]int pageNumber = 1)
+                                         [FromQuery]string sortBy, [FromQuery]bool isDescending,
+                                         [FromQuery]int pageSize, [FromQuery]int pageNumber)
         {
-
+            if (pageSize <= 0) pageSize = 10;
+            if (pageNumber <= 0) pageNumber = 1;
+            
             var paging = new PagingInfo(pageSize, pageNumber);
 
             var query = new GetMemberList.Query()
@@ -54,8 +57,10 @@ namespace VIN.Members.API.Controllers
                 sortBy = MemberField.UserName.ToString();
             }
 
-            query.Sort.Add((MemberField)Enum.Parse(typeof(MemberField), sortBy),
-                isAscending ? SortDirection.Asc : SortDirection.Desc);
+            var field = Enumeration.GetAll<MemberField>().First(x => x.QueryParameter.ToLower() == sortBy.ToLower());
+            
+            query.Sort.Add(field,
+                        isDescending ? SortDirection.Desc : SortDirection.Asc);
 
             var result = await _mediator.Send(query).ConfigureAwait(false);
             

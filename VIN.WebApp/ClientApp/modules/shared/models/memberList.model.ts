@@ -2,7 +2,7 @@
 
 export interface IMemberList {
     data: IMember[];
-    pageIndex: number;
+    pageNumber: number;
     pageSize: number;
-    count: number;
+    rowCount: number;
 }

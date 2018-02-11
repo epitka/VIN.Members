@@ -26,6 +26,7 @@
     "aspnet-prerendering": "^3.0.1",
     "aspnet-webpack": "^2.0.1",
     "awesome-typescript-loader": "3.4.1",
+    "bootstrap": "^4.0.0",
     "chai": "4.1.2",
     "css": "2.2.1",
     "css-loader": "0.28.9",
@@ -58,6 +59,8 @@
     "zone.js": "0.8.20"
   },
   "dependencies": {
-    "@ng-bootstrap/ng-bootstrap": "^1.0.0"
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0",
+    "angular-font-awesome": "^3.1.2",
+    "font-awesome": "^4.7.0"
   }
 }

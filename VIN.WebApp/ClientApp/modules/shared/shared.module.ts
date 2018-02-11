@@ -13,7 +13,6 @@ import { StorageService } from './services/storage.service';
 
 // Components:
 import { NavMenuComponent} from "./components/navmenu/navmenu.component"
-import { Pager } from './components/pager/pager';
 import { Header } from './components/header/header';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
@@ -31,7 +30,6 @@ import { UppercasePipe } from './pipes/uppercase.pipe';
     ],
     declarations: [
         NavMenuComponent,
-        Pager,
         Header,
         PageNotFoundComponent,
         UppercasePipe
@@ -44,7 +42,6 @@ import { UppercasePipe } from './pipes/uppercase.pipe';
         RouterModule,
         // Providers, Components, directive, pipes
         NavMenuComponent,
-        Pager,
         Header,
         PageNotFoundComponent,
         UppercasePipe

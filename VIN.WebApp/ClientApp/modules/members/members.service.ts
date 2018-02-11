@@ -24,12 +24,17 @@ export class MembersService {
             this.configurationService.settingsLoaded$.subscribe(x => this.membersUrl = this.configurationService.serverSettings.memberAPIUrl);
     }
 
-    getMembers(pageNumber: number, pageSize: number):Observable<IMemberList> {
+    getMembers(pageNumber: number, pageSize: number, sortField:string, sortDirection:string): Observable<IMemberList> {
+        if (pageNumber <= 0) pageNumber = 1;
+        if (pageSize < 10) pageSize = 10;
+
         let url = this.membersUrl + '/api/members';
 
         var params = {
             pageNumber: pageNumber,
-            pageSize: pageSize
+            pageSize: pageSize,
+            sortBy: sortField,
+            isDescending: sortDirection =='desc'
         };
 
         return this.service.get<IMemberList>(url, params);
