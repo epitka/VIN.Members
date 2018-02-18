@@ -54,7 +54,7 @@ namespace VIN.Members.API.Controllers
 
             if (string.IsNullOrEmpty(sortBy))
             {
-                sortBy = MemberField.UserName.ToString();
+                sortBy = MemberField.UserName.QueryParameter;
             }
 
             var field = Enumeration.GetAll<MemberField>().First(x => x.QueryParameter.ToLower() == sortBy.ToLower());
@@ -141,11 +141,11 @@ namespace VIN.Members.API.Controllers
 
         // DELETE api/members/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
             var command = new DeleteMember.Command(id);
 
-            _mediator.Send(command).ConfigureAwait(false);
+           await _mediator.Send(command).ConfigureAwait(false);
         }
 
 

@@ -21,6 +21,7 @@ namespace VIN.Members.Domain.Entities.EFConfiguration
         private IDbContextTransaction _currentTransaction;
 
         public DbSet<Member> Members { get; set; }
+      
 
         public MemberContext(DbContextOptions<MemberContext> options) : base(options)
         {
@@ -29,8 +30,6 @@ namespace VIN.Members.Domain.Entities.EFConfiguration
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            // optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=SchoolDB;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -69,12 +68,12 @@ namespace VIN.Members.Domain.Entities.EFConfiguration
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.CurrentValues["IsDeleted"] = false;
+                        entry.CurrentValues[_isDeletedProperty] = false;
                         break;
 
                     case EntityState.Deleted:
                         entry.State = EntityState.Modified;
-                        entry.CurrentValues["IsDeleted"] = true;
+                        entry.CurrentValues[_isDeletedProperty] = true;
                         break;
                 }
             }
@@ -95,6 +94,7 @@ namespace VIN.Members.Domain.Entities.EFConfiguration
             var lambda = Expression.Lambda(condition, parm);
             return lambda;
         }
+
 
         #endregion
 
@@ -148,8 +148,9 @@ namespace VIN.Members.Domain.Entities.EFConfiguration
                 }
             }
         }
-        
+
         #endregion
+             
 
     }
 }

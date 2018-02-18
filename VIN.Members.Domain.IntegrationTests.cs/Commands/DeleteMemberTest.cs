@@ -36,9 +36,9 @@ namespace VIN.Members.Domain.IntegrationTests.Commands
 
                 member = await _memberContext.FindAsync<Member>(member.Id).ConfigureAwait(false);
 
-                var deleteCmd = new DeleteMember.Command(member.Id);
+               var deleteCmd = new DeleteMember.Command(member.Id);
 
-                await _mediator.Send(deleteCmd).ConfigureAwait(false);
+               await _mediator.Send(deleteCmd).ConfigureAwait(false);
 
                 //assert it is still in db
                var sut1 = await _memberContext.FindAsync<Member>(member.Id).ConfigureAwait(false);

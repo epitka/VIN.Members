@@ -19,7 +19,7 @@ namespace VIN.Members.API.AutofacConfig
                         .AsImplementedInterfaces()
                         .InstancePerLifetimeScope(); // via assembly scan
 
-            builder.RegisterType<MemberContext>().AsSelf().InstancePerLifetimeScope();
+           // builder.RegisterType<MemberContext>().AsSelf().InstancePerLifetimeScope();          // or individually
         }
     }
 }

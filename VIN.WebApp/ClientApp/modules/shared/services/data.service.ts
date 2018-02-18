@@ -8,6 +8,11 @@ import { Observer } from 'rxjs/Observer';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+
 @Injectable()
 export class DataService {
     constructor(private httpClient: HttpClient) { }
@@ -53,18 +58,14 @@ export class DataService {
     //        }).catch(this.handleError);
     //}
 
-    //delete(url: string, params?: any) {
-    //    let options: RequestOptionsArgs = {};
+    delete(url: string) {
 
-    //    console.log('data.service deleting');
-    //    // return this.http.delete(url, options).subscribe(
-    //    //        return res;
-    //    //    );
+        console.log("deleting @: " + url);
 
-    //    this.httpClient.delete(url, options).subscribe((res) => {
-    //        console.log('deleted');
-    //    });
-    //}
+        return this.httpClient.delete(url, httpOptions)
+                   .catch(this.handleError);
+           
+    }
 
     private handleError(error: any) {
 
@@ -79,6 +80,6 @@ export class DataService {
             }
             return Observable.throw(errMessage);
         }
-        return Observable.throw(error || 'server error');
+        return Observable.throw(error || 'server error').toPromise();
     }
 }

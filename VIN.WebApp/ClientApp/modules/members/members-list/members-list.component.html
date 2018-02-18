@@ -3,6 +3,25 @@
     <div class="alert alert-warning vin-member-alert" role="alert" [hidden]="!errorReceived">
         Error requesting members list, please try later on
     </div>
+    <div class="row">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="input-sm" [(ngModel)]="firstName" />
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="input-sm" [(ngModel)]="lastName" />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="input-sm" [(ngModel)]="email" />
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="input-sm" [(ngModel)]="firstName
+                   " />
+        </div>
+    </div>
     <div *ngIf="members?.length > 0">
         <div class="row">
             <div class="col-md-9">
@@ -51,6 +70,7 @@
                             [ngClass]="{'sort-ascent':sortByField == 'phone' && sortByDirection=='asc',
                                         'sort-descent':sortByField == 'phone' && sortByDirection=='desc'}"
                             (click)="onSortByChange('phone')">Phone</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,6 +81,10 @@
                         <td>{{item.dateOfBirth}}</td>
                         <td>{{item.email}}</td>
                         <td>{{item.phone}}</td>
+                        <td>
+                            <span class="deletable" (click)="onDelete(item)"></span>
+                            <a href="#" class="editable"></a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

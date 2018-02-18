@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { JsonpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http'; 
 
-
 // Services
 import { DataService } from './services/data.service';
 import { ConfigurationService } from './services/configuration.service';

@@ -2,7 +2,9 @@
 import { Response } from '@angular/http';
 
 import { DataService } from '../shared/services/data.service';
-import { IMemberList } from '../shared/models/memberList.model';
+import { IMemberList } from './members-list/members-list.model';
+import { IMember } from './member.model';
+
 import { ConfigurationService } from '../shared/services/configuration.service';
 
 import 'rxjs/Rx';
@@ -15,7 +17,7 @@ import 'rxjs/add/operator/map';
 export class MembersService {
 
     private membersUrl: string = '';
-
+    
     constructor(private service: DataService, private configurationService: ConfigurationService) {
        
         if (this.configurationService.isReady)
@@ -27,8 +29,7 @@ export class MembersService {
     getMembers(pageNumber: number, pageSize: number, sortField:string, sortDirection:string): Observable<IMemberList> {
         if (pageNumber <= 0) pageNumber = 1;
         if (pageSize < 10) pageSize = 10;
-
-        let url = this.membersUrl + '/api/members';
+              
 
         var params = {
             pageNumber: pageNumber,
@@ -37,8 +38,15 @@ export class MembersService {
             isDescending: sortDirection =='desc'
         };
 
-        return this.service.get<IMemberList>(url, params);
-  
+        return this.service.get<IMemberList>(this.membersUrl, params);
     } 
+
+    /** DELETE: delete the member from the server */
+    deleteMember(member: IMember | number): Observable<IMember> {
+        const id = typeof member === 'number' ? member : member.memberId;
+        const url = `${this.membersUrl}/${id}`;
+        return this.service.delete(url);
+    }
+
 }
 

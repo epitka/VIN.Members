@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\modules\shared\models\configuration.model.ts" />
-    <TypeScriptCompile Include="ClientApp\modules\shared\models\memberList.model.ts" />
+    <TypeScriptCompile Include="ClientApp\modules\members\members-list\members-list.model.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

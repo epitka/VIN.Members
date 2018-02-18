@@ -1,25 +1,25 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { MembersService } from './members.service';
-import { IMember } from '../shared/models/member.model';
-import { IMemberList } from '../shared/models/memberList.model';
-
-import { IPager } from '../shared/models/pager.model';
-import { ConfigurationService } from '../shared/services/configuration.service';
+import { MembersService } from '../members.service';
+import { IMember } from '../member.model';
+import { IMemberList } from './members-list.model';
+import { IPager } from '../../shared/models/pager.model';
+import { ConfigurationService } from '../../shared/services/configuration.service';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-    selector: 'vin-members',
-    templateUrl: './members.component.html',
-    styleUrls:['./members.component.css']
+    selector: 'vin-members-list',
+    templateUrl: './members-list.component.html',
+    styleUrls: ['./members-list.component.css']
 })
-export class MembersComponent implements OnInit {
+/** membersList component*/
+export class MembersListComponent implements OnInit {
 
     totalItemsCount: number;
     members: IMember[];
     errorReceived: boolean;
-    
+
     constructor(private service: MembersService, private configurationService: ConfigurationService) { }
-    
+
     private _page: number = 1;
     get page(): number {
         return this._page;
@@ -43,7 +43,7 @@ export class MembersComponent implements OnInit {
 
     public sortByField: string = 'username';
     public sortByDirection: string = 'asc';
-    
+
     ngOnInit() {
         if (this.configurationService.isReady) {
             this.getMembers();
@@ -54,7 +54,7 @@ export class MembersComponent implements OnInit {
         }
     }
 
-   
+
     onSortByChange(value: string) {
 
         console.log("onSortByChange: " + value);
@@ -71,6 +71,18 @@ export class MembersComponent implements OnInit {
         this.getMembers();
     }
 
+    onDelete(item: IMember) {
+        //TODO: replace this with dialog service component
+        if (window.confirm('Are sure you want to delete this member?')) {
+            //put your delete method logic here
+            this.service.deleteMember(item).subscribe(x => {
+
+                console.log("Meber deleted, fetching members");
+                this.getMembers();
+            });
+        }
+    }
+
     getMembers() {
 
         console.log("in get members");
@@ -84,7 +96,7 @@ export class MembersComponent implements OnInit {
                 console.log(response);
 
                 this.members = response.data;
-                
+
                 this.totalItemsCount = response.rowCount;
             });
     }

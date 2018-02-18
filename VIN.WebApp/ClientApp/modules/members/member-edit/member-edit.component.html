@@ -1,0 +1,49 @@
+﻿
+<div class="container">
+    <form>
+        <div class="alert alert-warning vin-member-alert" role="alert" [hidden]="!errorReceived">
+            Error requesting members list, please try later on
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label for="userName">User Name</label>
+                <input type="text" class="input-sm" [(ngModel)]="userName" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="input-sm" [(ngModel)]="firstName" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="input-sm" [(ngModel)]="lastName" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label for="dateOfBirth"></label>
+                <input type="text" class="input-sm" [(ngModel)]="dateOfBirth" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="input-sm" [(ngModel)]="email" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" class="input-sm" [(ngModel)]="phone" />
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <button type="button">Save</button>
+        <button type="button">Cancel</button>
+    </div>
+</div>
+

@@ -50,11 +50,11 @@ namespace VIN.Members.API
             var connection = Configuration["ConnectionString"];
 
             services.AddDbContext<MemberContext>(options => options.UseSqlServer(connection),ServiceLifetime.Scoped);
-
+        
             //services.AddEntityFrameworkSqlServer()
             //    .AddDbContext<MemberContext>(options =>
             //        {
-            //            options.UseSqlServer(Configuration["ConnectionString"]
+            //            options.UseSqlServer(connection
             //                //,sqlServerOptionsAction: sqlOptions =>
             //                //{
             //                //    sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
@@ -65,12 +65,10 @@ namespace VIN.Members.API
             //        ServiceLifetime.Scoped  //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
             //    );
 
-           
+
             var container = new ContainerBuilder();
             container.Populate(services);
 
-
-            container.RegisterModule(new MediatorModule());
             container.RegisterAssemblyModules(typeof(VIN.Members.Domain.Entities.Member).Assembly,
                                               typeof(Startup).Assembly);
 

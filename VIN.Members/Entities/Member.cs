@@ -115,9 +115,16 @@ namespace VIN.Members.Domain.Entities
             }
         }
 
+
         //protected internal void MarkAsDeleted()
         //{
         //    _isDeleted = true;
         //}
+
+        //private bool _isDeleted;
+        //public bool IsDeleted {
+        //    get { return _isDeleted; }
+        //}
+
     }
 }

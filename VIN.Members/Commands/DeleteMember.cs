@@ -27,32 +27,33 @@ namespace VIN.Members.Domain.Commands
 
         public class Handler : AsyncRequestHandler<Command>
         {
-            private readonly MemberContext _context;
+            private MemberContext _context;
 
             public Handler(MemberContext context)
             {
                 _context = context;
             }
 
-            protected override async Task HandleCore(Command cmd)
+            protected async override Task HandleCore(Command cmd)
             {
                 try
                 {
-                    var member = await _context.FindAsync<Member>(cmd.MemberId);//.ConfigureAwait(false);
+                   var member = await _context.FindAsync<Member>(cmd.MemberId);
+                          
+                    //TODO: need to figure out why check for just member != null
+                    //crashes the whole app !!!
+                    if (member?.Id != null)
+                    {
+                         _context.Remove(member);
 
-                   // if (member != null)
-                   //// {
-                        _context.Remove(member);
-
-                        await _context.SaveChangesAsync().ConfigureAwait(false);
-                   // }
+                         await _context.SaveChangesAsync();
+                    }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
                     throw;
                 }
-              
 
                 // use mediator here to notify other parts of application (within domain, not other microservices) of the change
             }

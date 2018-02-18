@@ -16,7 +16,7 @@ namespace VIN.Members.Domain.Entities.EFConfiguration
             member.UsePropertyAccessMode(PropertyAccessMode.Field);
 
             //shadow property and filter for ISoftDeletable could be auto added during context configuration
-            member.Property<bool>("IsDeleted");
+            member.Property<bool>("IsDeleted");          
             member.HasQueryFilter(obj => EF.Property<bool>(obj, "IsDeleted") == false);
 
             member.HasKey(o => o.Id);
@@ -56,8 +56,6 @@ namespace VIN.Members.Domain.Entities.EFConfiguration
             member.Property(x => x.Phone)
                 .HasMaxLength(10)
                 .HasColumnName("Phone");
-
-          
         }
     }
 }
