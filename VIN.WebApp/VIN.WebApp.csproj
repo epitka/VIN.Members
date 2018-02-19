@@ -21,11 +21,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\modules\shared\components\modal\modal.component.css" />
+    <None Remove="ClientApp\modules\shared\components\modal\modal.module.ts" />
     <None Remove="ClientApp\modules\shared\models\configuration.model.ts" />
     <None Remove="ClientApp\modules\shared\models\memberList.model.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\modules\shared\components\modal\modal.component.css" />
+    <TypeScriptCompile Include="ClientApp\modules\shared\components\modal\modal.module.ts" />
     <TypeScriptCompile Include="ClientApp\modules\shared\models\configuration.model.ts" />
     <TypeScriptCompile Include="ClientApp\modules\members\members-list\members-list.model.ts" />
   </ItemGroup>

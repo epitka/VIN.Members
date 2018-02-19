@@ -1,43 +1,43 @@
 ﻿
 <div class="container">
-    <form>
+    <form name="edit">
         <div class="alert alert-warning vin-member-alert" role="alert" [hidden]="!errorReceived">
             Error requesting members list, please try later on
         </div>
         <div class="row">
             <div class="form-group">
                 <label for="userName">User Name</label>
-                <input type="text" class="input-sm" [(ngModel)]="userName" />
+                <input type="text" name="userName" class="input-sm" [(ngModel)]="userName" />
             </div>
         </div>
         <div class="row">
             <div class="form-group">
                 <label for="firstName">First Name</label>
-                <input type="text" class="input-sm" [(ngModel)]="firstName" />
+                <input type="text" name="firstName" class="input-sm" [(ngModel)]="firstName" />
             </div>
         </div>
         <div class="row">
             <div class="form-group">
                 <label for="lastName">Last Name</label>
-                <input type="text" class="input-sm" [(ngModel)]="lastName" />
+                <input type="text" name="lastName" class="input-sm" [(ngModel)]="lastName" />
             </div>
         </div>
         <div class="row">
             <div class="form-group">
-                <label for="dateOfBirth"></label>
-                <input type="text" class="input-sm" [(ngModel)]="dateOfBirth" />
+                <label for="dateOfBirth">Date of Birth</label>
+                <input type="text" name="dateOfBirth" class="input-sm" [(ngModel)]="dateOfBirth" />
             </div>
         </div>
         <div class="row">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" class="input-sm" [(ngModel)]="email" />
+                <input type="text" name="email" class="input-sm" [(ngModel)]="email" />
             </div>
         </div>
         <div class="row">
             <div class="form-group">
                 <label for="phone">Phone</label>
-                <input type="text" class="input-sm" [(ngModel)]="phone" />
+                <input type="text" name="phone" class="input-sm" [(ngModel)]="phone" />
             </div>
         </div>
     </form>

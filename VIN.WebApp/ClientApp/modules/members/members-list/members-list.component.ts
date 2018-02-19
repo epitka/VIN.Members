@@ -5,20 +5,24 @@ import { IMemberList } from './members-list.model';
 import { IPager } from '../../shared/models/pager.model';
 import { ConfigurationService } from '../../shared/services/configuration.service';
 import { Observable } from 'rxjs/Observable';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { MemberEditComponent } from '../member-edit/member-edit.component';
+import { ModalComponent } from '../../shared/components/modal/modal.component';
 
 @Component({
     selector: 'vin-members-list',
     templateUrl: './members-list.component.html',
     styleUrls: ['./members-list.component.css']
 })
-/** membersList component*/
 export class MembersListComponent implements OnInit {
 
     totalItemsCount: number;
     members: IMember[];
     errorReceived: boolean;
 
-    constructor(private service: MembersService, private configurationService: ConfigurationService) { }
+    constructor(private modalService: NgbModal,
+        private service: MembersService,
+        private configurationService: ConfigurationService) { }
 
     private _page: number = 1;
     get page(): number {
@@ -54,7 +58,6 @@ export class MembersListComponent implements OnInit {
         }
     }
 
-
     onSortByChange(value: string) {
 
         console.log("onSortByChange: " + value);
@@ -76,11 +79,15 @@ export class MembersListComponent implements OnInit {
         if (window.confirm('Are sure you want to delete this member?')) {
             //put your delete method logic here
             this.service.deleteMember(item).subscribe(x => {
-
-                console.log("Meber deleted, fetching members");
                 this.getMembers();
             });
         }
+    }
+
+    onEdit(item: IMember) {
+        const modalRef = this.modalService.open(ModalComponent);
+
+        modalRef.componentInstance.name = 'World';
     }
 
     getMembers() {

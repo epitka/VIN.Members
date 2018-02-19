@@ -6,7 +6,7 @@ const  AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin
 
 module.exports = (env) => {
     // Configuration in common to both client-side and server-side bundles
-    const isDevBuild = !(env && env.prod);
+    const isDevBuild = true; // !(env && env.prod);
     const sharedConfig = {
         stats: { modules: false },
         context: __dirname,
