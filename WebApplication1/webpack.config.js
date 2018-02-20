@@ -1,8 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const AotPlugin = require('@ngtools/webpack').AotPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
-const  AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
 
 module.exports = (env) => {
     // Configuration in common to both client-side and server-side bundles
@@ -45,9 +45,10 @@ module.exports = (env) => {
         ] : [
             // Plugins that apply in production builds only
             new webpack.optimize.UglifyJsPlugin(),
-            new AngularCompilerPlugin({
+            new AotPlugin({
                 tsConfigPath: './tsconfig.json',
-                entryModule: path.join(__dirname, 'ClientApp/modules/app/app.browser.module#AppModule')
+                entryModule: path.join(__dirname, 'ClientApp/app/app.browser.module#AppModule'),
+                exclude: ['./**/*.server.ts']
             })
         ])
     });
@@ -65,9 +66,10 @@ module.exports = (env) => {
             })
         ].concat(isDevBuild ? [] : [
             // Plugins that apply in production builds only
-            new AngularCompilerPlugin({
+            new AotPlugin({
                 tsConfigPath: './tsconfig.json',
-                entryModule: path.join(__dirname, 'ClientApp//modules/app/app.server.module#AppModule')
+                entryModule: path.join(__dirname, 'ClientApp/app/app.server.module#AppModule'),
+                exclude: ['./**/*.browser.ts']
             })
         ]),
         output: {
