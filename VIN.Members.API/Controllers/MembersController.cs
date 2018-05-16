@@ -147,8 +147,6 @@ namespace VIN.Members.API.Controllers
 
            await _mediator.Send(command).ConfigureAwait(false);
         }
-
-
-
+    
     }
 }

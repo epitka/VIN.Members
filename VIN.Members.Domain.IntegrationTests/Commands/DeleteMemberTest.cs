@@ -17,8 +17,7 @@ namespace VIN.Members.Domain.IntegrationTests.Commands
             public Handler(ITestOutputHelper output) : base(output)
             {
             }
-
-
+            
             [Fact]
             public async Task Can_Delete()
             {
@@ -49,8 +48,7 @@ namespace VIN.Members.Domain.IntegrationTests.Commands
                 var sut = _memberContext.Members.FirstOrDefault(x => x.Id == member.Id);
 
                 sut.ShouldBe(null);
-
-
+                
             }
         }
     }

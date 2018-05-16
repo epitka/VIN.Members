@@ -26,14 +26,13 @@ namespace VIN.Members.Domain.IntegrationTests.Commands
                 var userName = new UserName(ug);
                 var name = new Name("First", "Last");
                 var email = new Email("test@test.com");
-                // var phone = new Phone(972, 390, 7316);
+               
                 var dob = new DateOfBirth(new DateTime(1972, 10, 26));
 
                 var cmd = new CreateMember.Command(userName, name, dob, email, null);
 
                 var member = await _mediator.Send(cmd).ConfigureAwait(false);
-
-
+                
                 var sut = await _memberContext.FindAsync<Member>(member.Id).ConfigureAwait(false);
 
                 sut.Id.ShouldBe(member.Id);

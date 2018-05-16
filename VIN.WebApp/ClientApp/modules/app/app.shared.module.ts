@@ -6,13 +6,15 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {SharedModule} from "../shared/shared.module"
 import {MembersModule} from '../members/members.module'
-import { routing } from '../app/app.routes';
+import { AppRoutingModule } from '../app/app-routing.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AppComponent } from './app.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        TestComponent
     ],
     imports: [
         CommonModule,
@@ -22,7 +24,7 @@ import { AppComponent } from './app.component';
         NgbModule.forRoot(),
         SharedModule.forRoot(),
         MembersModule,
-        routing]
+        AppRoutingModule]
 })
 export class AppModuleShared {
 }

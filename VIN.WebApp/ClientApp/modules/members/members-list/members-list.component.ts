@@ -9,6 +9,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { MemberEditComponent } from '../member-edit/member-edit.component';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
 
+import { Router, ActivationEnd, ChildActivationStart, NavigationStart, NavigationEnd } from '@angular/router';
+
 @Component({
     selector: 'vin-members-list',
     templateUrl: './members-list.component.html',
@@ -22,7 +24,20 @@ export class MembersListComponent implements OnInit {
 
     constructor(private modalService: NgbModal,
         private service: MembersService,
-        private configurationService: ConfigurationService) { }
+        private configurationService: ConfigurationService,
+        private router: Router) {
+
+        this.router.events
+            .filter(event => event instanceof ActivationEnd)
+            .subscribe((event: any) => {
+                console.log("List: " + event);
+                console.log(event);
+                if (event.snapshot.data.isModal) {
+                    const modalRef = this.modalService.open(ModalComponent);
+                    modalRef.componentInstance.loadComponent(event.snapshot.component, { memberId: 123 });
+                }
+            });
+    }
 
     private _page: number = 1;
     get page(): number {
@@ -56,6 +71,8 @@ export class MembersListComponent implements OnInit {
                 this.getMembers();
             });
         }
+        
+       
     }
 
     onSortByChange(value: string) {
@@ -86,8 +103,7 @@ export class MembersListComponent implements OnInit {
 
     onEdit(item: IMember) {
         const modalRef = this.modalService.open(ModalComponent);
-
-        modalRef.componentInstance.name = 'World';
+        modalRef.componentInstance.loadComponent(MemberEditComponent, {memberId:item.memberId});
     }
 
     getMembers() {

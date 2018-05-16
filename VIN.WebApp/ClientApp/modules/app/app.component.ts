@@ -6,6 +6,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { DataService } from '../shared/services/data.service';
 import { ConfigurationService } from '../shared/services/configuration.service';
 
+import { Router, ActivationStart, NavigationStart } from '@angular/router';
+import { ModalComponent } from '../shared/components/modal/modal.component';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+
 /*
  * App Component
  * Top Level Component
@@ -17,7 +21,10 @@ import { ConfigurationService } from '../shared/services/configuration.service';
 })
 export class AppComponent implements OnInit {
 
-    constructor(private titleService: Title, private configurationService: ConfigurationService) {
+    constructor(private titleService: Title,
+        private configurationService: ConfigurationService,
+        private router: Router,
+        private modalService: NgbModal) {
     }
 
     ngOnInit() {
@@ -26,6 +33,16 @@ export class AppComponent implements OnInit {
         //Get configuration from server environment variables:
         console.log('configuration');
         this.configurationService.load();
+
+        //this.router.events
+        //    .filter(event => event instanceof ActivationStart)
+        //    .subscribe((event: ActivationStart) => {
+        //        if (event.snapshot.data.isModal) {
+        //            const modalRef = this.modalService.open(ModalComponent);
+        //            modalRef.componentInstance.loadComponent(event.snapshot.component, { memberId: 123 });
+        //        }
+
+        //    });
     }
 
     public setTitle(newTitle: string) {

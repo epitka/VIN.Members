@@ -24,6 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\modules\members\members-routing.module.ts" />
+    <None Remove="ClientApp\modules\members\membersRootComponent.ts" />
     <None Remove="ClientApp\modules\shared\components\modal\modal.component.css" />
     <None Remove="ClientApp\modules\shared\components\modal\modal.module.ts" />
     <None Remove="ClientApp\modules\shared\models\configuration.model.ts" />
@@ -31,6 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\modules\members\members-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\modules\members\membersRootComponent.ts" />
     <TypeScriptCompile Include="ClientApp\modules\shared\components\modal\modal.component.css" />
     <TypeScriptCompile Include="ClientApp\modules\shared\components\modal\modal.module.ts" />
     <TypeScriptCompile Include="ClientApp\modules\shared\models\configuration.model.ts" />

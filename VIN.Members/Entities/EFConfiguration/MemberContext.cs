@@ -34,17 +34,17 @@ namespace VIN.Members.Domain.Entities.EFConfiguration
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //foreach (var entity in modelBuilder.Model.GetEntityTypes())
-            //{
-            //    if (typeof(ISoftDeletable).IsAssignableFrom(entity.ClrType) == true)
-            //    {
-            //        entity.AddProperty(_isDeletedProperty, typeof(bool));
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                if (typeof(ISoftDeletable).IsAssignableFrom(entity.ClrType) == true)
+                {
+                    entity.AddProperty(_isDeletedProperty, typeof(bool));
 
-            //        modelBuilder
-            //            .Entity(entity.ClrType)
-            //            .HasQueryFilter(GetIsDeletedRestriction(entity.ClrType));
-            //    }
-            //}
+                    modelBuilder
+                        .Entity(entity.ClrType)
+                        .HasQueryFilter(GetIsDeletedRestriction(entity.ClrType));
+                }
+            }
 
             modelBuilder.ApplyConfiguration(new MemberMap());
         }

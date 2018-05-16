@@ -6,32 +6,27 @@ import { MemberEditComponent } from '../../../members/member-edit/member-edit.co
 
 //NOTE: there is some issue with bootstrap not emitting css .fade.show to turn opacity to 1, hence style sheet
 
+import { RouterModule } from '@angular/router';
+
 @Component({
     templateUrl: './modal.component.html',
     styleUrls: ['./modal.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class ModalComponent implements OnInit {
-    @Input() toLoad: Type<any>;
+export class ModalComponent {
     @ViewChild(ModalContentDirective) host: ModalContentDirective;
 
     constructor(private componentFactoryResolver: ComponentFactoryResolver, public activeModal: NgbActiveModal) { }
 
-     ngOnInit() {
-        this.loadComponent();
-    }
+    loadComponent(component: Type<any>, data: Object) {
 
-    loadComponent() {
-
-        //let componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.toLoad);
-
-        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(MemberEditComponent);
+        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
 
         let viewContainerRef = this.host.viewContainerRef;
 
-        //viewContainerRef.clear();
-
         let componentRef = viewContainerRef.createComponent(componentFactory);
 
+        componentRef.instance.data = data;
     }
+    
 }
